@@ -10,7 +10,7 @@
     concat, concat-map, flatten,
     maximum, minimum, maximum-by, minimum-by,
     scan, scan1, scanl, scanl1, scanr, scanr1,
-    slice, take, drop, split-at, take-while, drop-while, span, break-list,
+    slice, take, drop, split-at, split-every, take-while, drop-while, span, break-list,
     zip, zip-with, zip-all, zip-all-with,
     at, elem-index, elem-indices, find-index, find-indices,
   }
@@ -192,6 +192,9 @@ suite 'unique-by' ->
 
   test 'accessor' ->
     deep-eq [[] [1 2 3] [4] [5 6]], unique-by (.length), [[], [1 2 3], [4], [5 6], [7], [8 9 10]]
+
+  test 'curried' ->
+    deep-eq [1,2,3,4,5,6], (unique-by id) [1 1 2 3 3 4 5 5 5 5 5 6 6 6 6]
 
 suite 'fold' ->
   test 'empty list as input' ->
@@ -516,6 +519,9 @@ suite 'maximum-by' ->
   test 'multi element list' ->
     eq 'long-string', maximum-by (.length), <[ hi there I am a really long-string ]>
 
+  test 'curried' ->
+    eq 2, (maximum-by id) [1 2 0]
+
 suite 'minimum-by' ->
   test 'empty list as input' ->
     eq void, minimum-by id, []
@@ -525,6 +531,9 @@ suite 'minimum-by' ->
 
   test 'multi element list' ->
     eq 'I', minimum-by (.length), <[ hi there I am a really long-string ]>
+
+  test 'curried' ->
+    eq 0, (minimum-by id) [1 2 0]
 
 suite 'scan' ->
   test 'empty list as input' ->
@@ -658,6 +667,29 @@ suite 'split-at' ->
   test 'curried' ->
     f = split-at 3
     deep-eq [[1 2 3], [4 5]], f [1 2 3 4 5]
+
+suite 'split-every' ->
+  test 'empty list as input' ->
+    deep-eq [[]], split-every 3 []
+
+  test 'zero on list' ->
+    deep-eq [[1 2 3 4 5]], split-every 0 [1 2 3 4 5]
+
+  test 'negative number' ->
+    deep-eq [[1 2 3 4 5]], split-every -1 [1 2 3 4 5]
+
+  test 'smaller parts' ->
+    deep-eq [[1 2 3 4 5 6 7 8 9], [10]], split-every 9 [1 2 3 4 5 6 7 8 9 10]
+
+  test 'large number' ->
+    deep-eq [[1 2 3 4 5]], split-every 15 [1 2 3 4 5]
+
+  test 'list' ->
+    deep-eq [[1 2 3], [4 5 6], [7 8 9]], split-every 3 [1 2 3 4 5 6 7 8 9]
+
+  test 'curried' ->
+    f = split-at 3
+    deep-eq [[1 2 3], [4 5 6]], f [1 2 3 4 5 6]
 
 suite 'take-while' ->
   test 'empty list as input' ->

@@ -32,7 +32,7 @@ prelude <<< List{
   concat, concat-map, flatten,
   maximum, minimum, maximum-by, minimum-by,
   scan, scanl, scan1, scanl1, scanr, scanr1,
-  slice, take, drop, split-at, take-while, drop-while, span, break-list,
+  slice, take, drop, split-at, split-every, take-while, drop-while, span, break-list,
   zip, zip-with, zip-all, zip-all-with,
   at, elem-index, elem-indices, find-index, find-indices,
 }
@@ -54,6 +54,6 @@ prelude <<< Num{
   truncate, round, ceiling, floor, is-it-NaN, even, odd, gcd, lcm,
 }
 
-prelude.VERSION = '1.1.0'
+prelude.VERSION = '1.1.1'
 
 module.exports = prelude

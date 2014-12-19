@@ -53,7 +53,7 @@ unique = (xs) ->
     result.push x
   result
 
-unique-by = (f, xs) ->
+unique-by = (f, xs) -->
   seen = []
   for x in xs
     val = f x
@@ -214,7 +214,7 @@ maximum-by = (f, xs) -->
     max = x
   max
 
-minimum-by = (f, xs) ->
+minimum-by = (f, xs) -->
   min = xs.0
   for x in xs.slice 1 when (f x) < (f min)
     min = x
@@ -253,6 +253,14 @@ drop = (n, xs) -->
     xs.slice n
 
 split-at = (n, xs) --> [(take n, xs), (drop n, xs)]
+
+split-every = (n, xs) -->
+  result = []
+  return [xs] unless xs.length and n and n isnt 0 and n >= 1
+  until xs.length <= n
+    result.push take n, xs
+    xs := drop n, xs
+  result ++ [xs]
 
 take-while = (p, xs) -->
   len = xs.length
@@ -330,7 +338,7 @@ module.exports = {
   concat, concat-map, flatten,
   maximum, minimum, maximum-by, minimum-by,
   scan, scan1, scanl, scanl1, scanr, scanr1,
-  slice, take, drop, split-at, take-while, drop-while, span, break-list,
+  slice, take, drop, split-at, split-every, take-while, drop-while, span, break-list,
   zip, zip-with, zip-all, zip-all-with,
   at, elem-index, elem-indices, find-index, find-indices,
 }
