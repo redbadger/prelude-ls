@@ -254,6 +254,14 @@ drop = (n, xs) -->
 
 split-at = (n, xs) --> [(take n, xs), (drop n, xs)]
 
+split-every = (n, xs) -->
+  result = []
+  return [xs] unless xs.length and n and n isnt 0 and n >= 1
+  until xs.length <= n
+    result.push take n, xs
+    xs := drop n, xs
+  result ++ [xs]
+
 take-while = (p, xs) -->
   len = xs.length
   return xs unless len
@@ -330,7 +338,7 @@ module.exports = {
   concat, concat-map, flatten,
   maximum, minimum, maximum-by, minimum-by,
   scan, scan1, scanl, scanl1, scanr, scanr1,
-  slice, take, drop, split-at, take-while, drop-while, span, break-list,
+  slice, take, drop, split-at, split-every, take-while, drop-while, span, break-list,
   zip, zip-with, zip-all, zip-all-with,
   at, elem-index, elem-indices, find-index, find-indices,
 }
